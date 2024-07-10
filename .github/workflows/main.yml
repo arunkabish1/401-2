@@ -1,0 +1,130 @@
+name: CI/CD
+on: push
+
+
+env:
+  PG_DATABASE: "${{ secrets.POSTGRES_DATABASE }}"
+  PG_USER: "${{ secrets.POSTGRES_USER }}"
+  PG_PASSWORD: "${{ secrets.POSTGRES_PASSWORD }}"
+
+# Jobs
+jobs:
+  run-tests:
+    # Runs on Ubuntu latest version
+
+    runs-on: ubuntu-latest
+
+    # Define a PostgreSQL service for running tests
+    services:
+      postgres:
+        image: postgres:11.7
+        env:
+          POSTGRES_USER: "postgres"
+          POSTGRES_PASSWORD: "changeme"
+          POSTGRES_DB: "wd-todo-test"
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    # Steps to execute within the job
+    steps:
+      # Check out repository code
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+        # Install dependencies
+      - name: Install dependencies
+        run: npm ci
+      # Run unit tests
+      - name: Run unit tests
+        run: npm test
+      # Run the app
+      - name: Run the app
+        id: run-app
+        run: |
+          npx sequelize-cli db:drop
+          npx sequelize-cli db:create
+          npx sequelize-cli db:migrate
+          PORT=3000 npm start &
+          sleep 5
+      # Run integration tests
+      - name: Run integration tests
+        run: |
+          npm install cypress cypress-json-results
+          npx cypress run
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest        
+
+  # Job to deploy the app to production
+  deploy:
+    # Define the job dependencies
+    needs: run-tests
+    runs-on: ubuntu-latest
+    if: needs.run-tests.result == 'success'
+
+    # Steps to execute within the job
+    steps:
+      # Deploy to production using a custom action
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: "${{ secrets.MY_RENDER_SERVICE_ID }}"
+          api-key: "${{ secrets.MY_RENDER_API_KEY }}"
+
+  # Job to send Slack notifications
+  notify:
+    # Define the job dependencies
+    needs: [run-tests, deploy]
+    runs-on: ubuntu-latest
+
+    if: ${{ always() }}
+    steps:
+      - name: Send Slack notification on success
+
+        # Send a Slack notification if the tests and deployment are successful
+        if: ${{ needs.run-tests.result == 'success' && needs.deploy.result == 'success' }}
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+            {
+              "text": "CI/CD process succeeded!" 
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Send Slack notification on failure
+        if: ${{ needs.run-tests.result != 'success' || needs.deploy.result != 'success' }}
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+            {
+              "text": "*${{ github.workflow }}* failed. Access the details https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}."
+               
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

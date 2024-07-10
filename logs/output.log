@@ -1,0 +1,113 @@
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 3000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+ConnectionRefusedError [SequelizeConnectionRefusedError]: connect ECONNREFUSED 127.0.0.1:5432
+    at Client._connectionCallback (D:\Repositories\todo-401\node_modules\sequelize\lib\dialects\postgres\connection-manager.js:130:24)
+    at Client._handleErrorWhileConnecting (D:\Repositories\todo-401\node_modules\pg\lib\client.js:305:19)
+    at Client._handleErrorEvent (D:\Repositories\todo-401\node_modules\pg\lib\client.js:315:19)
+    at Connection.emit (node:events:514:28)
+    at Socket.reportStreamError (D:\Repositories\todo-401\node_modules\pg\lib\connection.js:52:12)
+    at Socket.emit (node:events:514:28)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  parent: Error: connect ECONNREFUSED 127.0.0.1:5432
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16) {
+    errno: -4078,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5432
+  },
+  original: Error: connect ECONNREFUSED 127.0.0.1:5432
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1595:16) {
+    errno: -4078,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5432
+  }
+}
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Executing (default): SELECT "id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt" FROM "Users" AS "User" WHERE "User"."email" = 'sriharsh.harsha5@gmail.com';
+Executing (default): INSERT INTO "Users" ("id","firstName","lastName","email","password","createdAt","updatedAt") VALUES (DEFAULT,$1,$2,$3,$4,$5,$6) RETURNING "id","firstName","lastName","email","password","createdAt","updatedAt";
+Executing (default): SELECT "id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt" FROM "Users" AS "User" WHERE "User"."id" = 82;
+Executing (default): SELECT "id", "title", "dueDate", "completed", "createdAt", "updatedAt", "userId" FROM "Todos" AS "Todo" WHERE "Todo"."dueDate" < '2024-02-29' AND "Todo"."completed" = false AND "Todo"."userId" = 82;
+Executing (default): SELECT "id", "title", "dueDate", "completed", "createdAt", "updatedAt", "userId" FROM "Todos" AS "Todo" WHERE "Todo"."dueDate" = '2024-02-29' AND "Todo"."completed" = false AND "Todo"."userId" = 82;
+Executing (default): SELECT "id", "title", "dueDate", "completed", "createdAt", "updatedAt", "userId" FROM "Todos" AS "Todo" WHERE "Todo"."dueDate" > '2024-02-29' AND "Todo"."completed" = false AND "Todo"."userId" = 82;
+Executing (default): SELECT "id", "title", "dueDate", "completed", "createdAt", "updatedAt", "userId" FROM "Todos" AS "Todo" WHERE "Todo"."completed" = true AND "Todo"."userId" = 82;
+Executing (default): SELECT "id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt" FROM "Users" AS "User" WHERE "User"."id" = 82;
+Executing (default): INSERT INTO "Todos" ("id","title","dueDate","completed","createdAt","updatedAt","userId") VALUES (DEFAULT,$1,$2,$3,$4,$5,$6) RETURNING "id","title","dueDate","completed","createdAt","updatedAt","userId";
+Executing (default): SELECT "id", "firstName", "lastName", "email", "password", "createdAt", "updatedAt" FROM "Users" AS "User" WHERE "User"."id" = 82;
+Executing (default): SELECT "id", "title", "dueDate", "completed", "createdAt", "updatedAt", "userId" FROM "Todos" AS "Todo" WHERE "Todo"."dueDate" < '2024-02-29' AND "Todo"."completed" = false AND "Todo"."userId" = 82;
+Executing (default): SELECT "id", "title", "dueDate", "completed", "createdAt", "updatedAt", "userId" FROM "Todos" AS "Todo" WHERE "Todo"."dueDate" = '2024-02-29' AND "Todo"."completed" = false AND "Todo"."userId" = 82;
+Executing (default): SELECT "id", "title", "dueDate", "completed", "createdAt", "updatedAt", "userId" FROM "Todos" AS "Todo" WHERE "Todo"."dueDate" > '2024-02-29' AND "Todo"."completed" = false AND "Todo"."userId" = 82;
+Executing (default): SELECT "id", "title", "dueDate", "completed", "createdAt", "updatedAt", "userId" FROM "Todos" AS "Todo" WHERE "Todo"."completed" = true AND "Todo"."userId" = 82;
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
+Started express server at port 4000
