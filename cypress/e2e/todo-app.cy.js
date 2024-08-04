@@ -33,7 +33,7 @@ function formatDateWithOffset(daysOffset = 0) {
 
 const firstName = "VTA";
 const lastName = "User";
-const email = "sriharsh@sriharsh.com";
+const email = "vta@pupilfirst.com";
 const password = "123456789";
 
 describe("Starting the tests for todo app", () => {

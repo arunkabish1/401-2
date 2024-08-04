@@ -27,7 +27,7 @@ const logout = async (agent) => {
 describe("List the todo items", function () {
   beforeAll(async () => {
     await db.sequelize.sync({ force: true });
-    server = app.listen(4000, () => {});
+    server = app.listen(3000, () => {});
     agent = request.agent(server);
   });
 
