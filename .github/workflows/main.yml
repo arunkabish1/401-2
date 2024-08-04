@@ -19,7 +19,7 @@ jobs:
       postgres:
         image: postgres:11.7
         env:
-          POSTGRES_USER: "postgres"
+          POSTGRES_USER: "admin"
           POSTGRES_PASSWORD: "changeme"
           POSTGRES_DB: "wd-todo-test"
         options: >-
