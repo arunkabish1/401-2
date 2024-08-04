@@ -16,7 +16,6 @@ const saltRounds = 10;
 
 app.use(bodyParser.json());
 
-// Set EJS as view engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
